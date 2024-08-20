@@ -6,6 +6,7 @@ module.exports = app => {
 	const plans=require("../controllers/plan.controller.js")
 	const workouts=require("../controllers/workouts.controller.js")
 	const workoutNames=require('../controllers/workouts.controller.js')
+	const dietPlans =require('../controllers/dietPlans.controller.js')
 	
 
 	const jwt = require('jsonwebtoken');
@@ -66,6 +67,18 @@ module.exports = app => {
 
 	//Delete Workout data
     app.delete('/api/delete-workout/:id', workouts.delete);
+
+    //Add Diet plans
+	app.post('/api/add-diet-plan', dietPlans.add);
+
+    //List out the diet plans
+	app.get('/api/diet-plans', dietPlans.list);
+
+	//Update diet plans
+	app.put('/api/diet-plans/:id', dietPlans.update);
+
+	//delete diet plans
+	app.delete('/api/diet-plans/:id', dietPlans.delete);
 
 
 
