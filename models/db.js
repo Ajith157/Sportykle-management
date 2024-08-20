@@ -1,24 +1,17 @@
-// const mysql = require("mysql2");
+const mysql = require("mysql2");
 
-// var db_config = {
-//   host: '127.0.0.1',
-//     user: 'root',
-//     password: 'root',
-//     database: 'sportykle'
-// };
+var db_config = {
+  host: '127.0.0.1',
+    user: 'root',
+    password: 'root',
+    database: 'sportykle'
+};
 
 
 
 
 // var connection;
-const mysql = require("mysql2");
 
-var db_config = {
-  host: '127.0.0.1',
-  user: 'bbnet_admin', 
-  password: '&Emad&,2HLm;',
-  database: 'bbnet_sportykle'
-};
 
 var connection;
 
