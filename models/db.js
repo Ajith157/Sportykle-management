@@ -1,13 +1,13 @@
+
+
 const mysql = require("mysql2");
 
 var db_config = {
-  host: '127.0.0.1',
-    user: 'root',
-    password: 'root',
-    database: 'sportykle'
+  host: '162.241.123.75',
+    user: 'bbnet_admin',
+    password: '&Emad&,2HLm;',
+    database: 'bbnet_sportykle'
 };
-
-
 
 
 // var connection;
