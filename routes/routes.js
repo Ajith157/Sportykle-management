@@ -7,6 +7,12 @@ module.exports = app => {
 	const workouts=require("../controllers/workouts.controller.js")
 	const workoutNames=require('../controllers/workouts.controller.js')
 	const dietPlans =require('../controllers/dietPlans.controller.js')
+	const AddMember=require('../controllers/addmember.controller.js')
+    const GetMember=require("../controllers/addmember.controller.js")
+	const authController=require("../controllers/organization.controller.js")
+    const organizationController=require("../controllers/organization.controller.js")
+	const authMiddleware=require("../Middleware/AuthMiddleware.js")
+	
 	
 
 	const jwt = require('jsonwebtoken');
@@ -31,14 +37,27 @@ module.exports = app => {
 	    }
 	};
 
-	// Create a new Organization
-  	app.post("/api/organization", organization.create);
+	
+  	// app.post("/api/organization", organization.create);
 
-  	// Staff Login
-  	app.post("/api/login", organization.login);
+
+  	// app.post("/api/login", organization.login);
+
+
+
+	  app.post('/api/signup', authController.signup);
+
+	  app.post('/api/login', authController.login);
+
+	  app.put('/api/add-organization', organizationController.addOrganization);
+
+	  app.put('/api/edit-organization', organizationController.editOrganization);
+
+
+
 
   	// Payment Modes
-  	app.post("/api/add-paymentmode", paymentmode.add);
+    app.post("/api/add-paymentmode", paymentmode.add);
 
   	app.post("/api/get-paymentmodes", paymentmode.list);
 
@@ -79,6 +98,16 @@ module.exports = app => {
 
 	//delete diet plans
 	app.delete('/api/diet-plans/:id', dietPlans.delete);
+
+
+
+
+
+
+
+
+	
+
 
 
 
