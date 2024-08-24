@@ -1,9 +1,9 @@
 
 const Workout = require('../models/workouts.model.js');
-const WorkoutName = require('../models/workoutname.model.js'); 
+
 
 exports.add = async (req, res) => {
-    if (!req.body || !req.body.organization_id || !req.body.name || !req.body.workout_names) {
+    if (!req.body || !req.body.organization_id || !req.body.name) {
         return res.status(400).send({
             message: "Content cannot be empty or missing required fields!"
         });
@@ -18,23 +18,9 @@ exports.add = async (req, res) => {
         workout_image: req.body.workout_image
     };
 
-    const workoutNamesData = req.body.workout_names.map(name => ({
-        workout_name: name
-    }));
-
     try {
-       
         const workout = await Workout.create(workoutData);
-
- 
-        await WorkoutName.bulkCreate(
-            workoutNamesData.map(name => ({
-                workout_id: workout.workout_id,
-                ...name
-            }))
-        );
-
-        res.status(201).send({ status: '200', message: 'Workout and workout names added successfully!' });
+        res.status(201).send({ status: '200', message: 'Workout added successfully!' });
     } catch (err) {
         console.error("Error while adding workout: ", err);
         res.status(500).send({
@@ -44,24 +30,22 @@ exports.add = async (req, res) => {
 };
 
 
+
 exports.listAll = async (req, res) => {
     try {
-        
-        const workoutNames = await WorkoutName.findAll({
-            attributes: ['workout_name']
-        });
+        const workouts = await Workout.findAll();
 
-        if (workoutNames.length === 0) {
+        if (workouts.length === 0) {
             return res.status(404).send({
-                message: "No workout names found."
+                message: "No workouts found."
             });
         }
 
-        res.status(200).send(workoutNames);
+        res.status(200).send(workouts);
     } catch (err) {
-        console.error("Error while retrieving workout names: ", err);
+        console.error("Error while retrieving workouts: ", err);
         res.status(500).send({
-            message: err.message || "Some error occurred while retrieving the workout names."
+            message: err.message || "Some error occurred while retrieving the workouts."
         });
     }
 };

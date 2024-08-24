@@ -76,7 +76,7 @@ module.exports = app => {
 
 	app.post('/api/add-workout', workouts.add);
 
-    app.get('/api/workout-names', workouts.listAll);
+    app.get('/api/get-workouts', workouts.listAll);
 
 	//Updata workout data
     app.put('/api/edit-workout/:id', workouts.edit);
@@ -95,6 +95,8 @@ module.exports = app => {
 
 	//delete diet plans
 	app.delete('/api/diet-plans/:id', dietPlans.delete);
+
+	
 
 
 
