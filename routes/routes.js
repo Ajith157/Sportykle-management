@@ -38,10 +38,7 @@ module.exports = app => {
 	};
 
 	
-  	// app.post("/api/organization", organization.create);
-
-
-  	// app.post("/api/login", organization.login);
+  
 
 
 

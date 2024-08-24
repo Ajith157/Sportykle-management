@@ -9,7 +9,7 @@ exports.add = async (req, res) => {
   }
 
   const data = {
-    orgid: req.body.orgid,
+    orgid: req.body.organizationid,
     name: req.body.name,
     description: req.body.description,
     photo: req.body.photo
@@ -36,7 +36,7 @@ exports.list = async (req, res) => {
   }
 
   const data = {
-    orgid: req.body.orgid,
+    orgid: req.body.organizationid,
   };
 
 

@@ -1,80 +1,12 @@
-// const Organization = require("../models/organization.model.js");
-// const jwt = require('jsonwebtoken');
-// const bcrypt = require('bcrypt');
-// const saltRounds = 10;
-// const dotenv = require('dotenv');
-// dotenv.config();
-// const verifyToken=require("../Middleware/AuthMiddleware.js")
-
-// exports.create = async (req, res) => {
-//   if (!req.body) {
-//     return res.status(400).send({
-//       message: "Content can not be empty!"
-//     });
-//   }
-
-//   const { name, email, password } = req.body;
-
-//   try {
-//     const encryptedPassword = await bcrypt.hash(password, saltRounds);
-
-//     // Create organization using the model
-//     const organizationData = {
-//       name,
-//       email,
-//       password: encryptedPassword,
-//     };
-
-//     // Call the model function to create the organization
-//     Organization.create(organizationData, (err, data) => {
-//       if (err) {
-//         return res.status(500).send({
-//           message: err.message || "Some error occurred while creating the Company."
-//         });
-//       }
-
-//       return res.send(data);
-//     });
-
-//   } catch (error) {
-//     return res.status(500).send({
-//       message: "An error occurred during registration.",
-//       error: error.message
-//     });
-//   }
-// };
-
-
-// exports.login = (req, res) => {
-//   // Validate request
-//   if (!req.body) {
-//     res.status(400).send({
-//       message: "Content can not be empty!"
-//     });
-//   }
-
-//   // Create a Customer
-//   const organization = {
-//     email: req.body.email,
-//     password: req.body.password
-//   };
-
-//   // Save Customer in the database
-//   Organization.login(organization, (err, data) => {
-//     if (err)
-//       res.status(500).send({
-//         message:
-//           err.message || "Some error occurred while Login."
-//       });
-//     else res.send(data);
-//   });
-// };
-
-
-const Organization=require("../models/organization.model")
-const bcrypt = require('bcrypt');
+const Organization = require("../models/organization.model.js");
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const dotenv = require('dotenv');
+dotenv.config();
+const verifyToken=require("../Middleware/AuthMiddleware.js")
 const tokenSecret = process.env.TOKEN_SECRET || 'default_secret_key';
+
 
 
 exports.signup = async (req, res) => {
