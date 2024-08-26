@@ -1,3 +1,5 @@
+const { addModule } = require("../controllers/addmodule.controller.js");
+
 module.exports = app => {
 
 	const organization = require("../controllers/organization.controller.js");
@@ -12,6 +14,11 @@ module.exports = app => {
 	const authController=require("../controllers/organization.controller.js")
     const organizationController=require("../controllers/organization.controller.js")
 	const authMiddleware=require("../Middleware/AuthMiddleware.js")
+	const addModuleController=require('../controllers/addmodule.controller.js')
+	const addCentreController=require('../controllers/addcentre.controller.js')
+	const addBatchController=require('../controllers/addcentre.controller.js')
+	const addSportsContoller=require('../controllers/addcentre.controller.js')
+	const addMemberController=require('../controllers/addmember.controller.js')
 	
 	
 
@@ -95,6 +102,21 @@ module.exports = app => {
 
 	//delete diet plans
 	app.delete('/api/diet-plans/:id', dietPlans.delete);
+
+	app.post('/api/add-module',addModuleController.addModule );
+
+	app.post('/api/add-centre',addCentreController.createCenter)
+
+	app.post('/api/add-batch',addBatchController.createBatch)
+
+
+	app.post('/api/add-sports',addSportsContoller.addSport)
+
+	app.post('/api/add-member',addMemberController.addMember)
+
+
+
+
 
 	
 
