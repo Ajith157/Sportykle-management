@@ -95,10 +95,11 @@ exports.createBatch = async (req, res) => {
             payment_collection_data,
             student_limit,
             assign_coach_staff,
-            description
+            description,
+            is_active = true 
         } = req.body;
 
-        // Validate input (you might want to use a validation library here)
+        // Validate input
         if (!organization_id || !batch_name || !start_time || !end_time) {
             return res.status(400).json({ message: 'Required fields are missing' });
         }
@@ -113,10 +114,9 @@ exports.createBatch = async (req, res) => {
             payment_collection_data,
             student_limit,
             assign_coach_staff,
-            description
+            description,
+            is_active
         });
-       
-        
 
         // Respond with success message and created batch
         res.status(201).json({
@@ -128,6 +128,47 @@ exports.createBatch = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+
+exports.getBatches = async (req, res) => {
+    try {
+        // Fetch all batches
+        const batches = await Batch.findAll();
+
+        // Respond with the batches
+        res.status(200).json(batches);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+exports.toggleBatchStatus = async (req, res) => {
+    try {
+        const batchId = req.params.id;
+
+        // Find the batch
+        const batch = await Batch.findByPk(batchId);
+
+        if (!batch) {
+            return res.status(404).json({ message: 'Batch not found' });
+        }
+
+        // Toggle the is_active status
+        batch.is_active = !batch.is_active;
+        await batch.save();
+
+        // Respond with success message and updated batch
+        res.status(200).json({
+            message: 'Batch status updated successfully',
+            batch
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
 
 
 exports.addSport = async (req, res) => {

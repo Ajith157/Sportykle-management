@@ -4,7 +4,7 @@ const sequelize = require('./sequelize');
 
 const Sports = sequelize.define('Sports', {
     id: {
-        type: DataTypes.BIGINT.UNSIGNED,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },

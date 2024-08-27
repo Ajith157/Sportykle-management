@@ -5,7 +5,7 @@ const sequelize = require('./sequelize');
 
 const Service = sequelize.define('services', {
     id: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true

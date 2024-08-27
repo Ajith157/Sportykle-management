@@ -1,17 +1,15 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../models/sequelize');
 
-
 const Batch = sequelize.define('Batch', {
     id: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
     organization_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        
     },
     batch_name: {
         type: DataTypes.STRING,
@@ -40,6 +38,10 @@ const Batch = sequelize.define('Batch', {
     },
     description: {
         type: DataTypes.TEXT
+    },
+    is_active: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
     },
     created_at: {
         type: DataTypes.DATE,

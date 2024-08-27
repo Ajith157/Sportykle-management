@@ -97,17 +97,27 @@ module.exports = app => {
     //List out the diet plans
 	app.get('/api/diet-plans', dietPlans.list);
 
+	
+
 	//Update diet plans
 	app.put('/api/diet-plans/:id', dietPlans.update);
 
 	//delete diet plans
 	app.delete('/api/diet-plans/:id', dietPlans.delete);
 
+	
+
 	app.post('/api/add-module',addModuleController.addModule );
 
 	app.post('/api/add-centre',addCentreController.createCenter)
 
 	app.post('/api/add-batch',addBatchController.createBatch)
+
+	app.get('/api/get-batches', addBatchController.getBatches);
+
+	app.patch('/api/batch/:id/toggle-status', addBatchController.toggleBatchStatus);
+
+
 
 
 	app.post('/api/add-sports',addSportsContoller.addSport)
