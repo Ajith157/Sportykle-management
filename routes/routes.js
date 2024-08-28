@@ -19,6 +19,7 @@ module.exports = app => {
 	const addBatchController=require('../controllers/addcentre.controller.js')
 	const addSportsContoller=require('../controllers/addcentre.controller.js')
 	const addMemberController=require('../controllers/addmember.controller.js')
+	const addStaffController=require('../controllers/addstaff.controller.js')
 	
 	
 
@@ -76,14 +77,19 @@ module.exports = app => {
 
 	app.post("/api/add-plan", plans.add);
 
-	app.get("/api/get-plans", plans.listAll)
+	app.get("/api/get-plans/:organizationId", plans.listAll)
+
+	app.patch('/api/plan/:id/toggle-status', plans.togglePlanStatus);
+
+
 
 	
 	//Add workout 
 
 	app.post('/api/add-workout', workouts.add);
 
-    app.get('/api/get-workouts', workouts.listAll);
+	app.get("/api/get-services", services.listAll);
+
 
 	//Updata workout data
     app.put('/api/edit-workout/:id', workouts.edit);
@@ -124,6 +130,15 @@ module.exports = app => {
 
 	app.post('/api/add-member',addMemberController.addMember)
 
+
+
+	app.post('/api/add-staff',addStaffController.addStaff)
+
+	app.get('/api/get-staff/:id',addStaffController.getStaffById)
+
+	app.put('/api/edit-staff/:id',addStaffController.editStaff)
+
+	
 
 
 
