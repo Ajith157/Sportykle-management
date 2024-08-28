@@ -1,6 +1,6 @@
 // controllers/centerController.js
 const { Module } = require('../models/sequelize'); 
-const Center=require('../models/addcentre.model')
+const Centre=require('../models/addcentre.model')
 const Batch=require('../models/addbatch.model')
 const Sports=require('../models/addsports.model')
 
@@ -33,13 +33,59 @@ exports.createCenter = async (req, res) => {
             select_days,
             map_location,
             referral,
-            referral_source,
+           
             terms_and_conditions_note
         } = req.body;
 
         // Create the center
-        const newCenter = await Center.create({
+        const newCenter = await Centre.create({
             organization_id,
+            profile_photo,
+            centre_name,
+            display_name,
+            mobile,
+            alternate_number,
+            address_line1,
+            address_line2,
+            country,
+            state,
+            gst_no,
+            website,
+            email_id,
+            city,
+            pincode,
+            use_organization_data,
+            weekdays_from,
+            weekdays_to,
+            saturday_from,
+            saturday_to,
+            sunday_from,
+            sunday_to,
+            select_days,
+            map_location,
+            referral,
+           
+            terms_and_conditions_note
+        });
+
+        res.status(201).json({
+            message: 'Center created successfully',
+            data: newCenter
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: 'Error creating center',
+            error: error.message
+        });
+    }
+};
+
+
+exports.updateCenter = async (req, res) => {
+    const centerId = req.params.id;
+    try {
+        const {
             profile_photo,
             centre_name,
             display_name,
@@ -66,23 +112,84 @@ exports.createCenter = async (req, res) => {
             referral,
             referral_source,
             terms_and_conditions_note
+        } = req.body;
+
+        // Find and update the center
+        const [updated] = await Centre.update({
+            profile_photo,
+            centre_name,
+            display_name,
+            mobile,
+            alternate_number,
+            address_line1,
+            address_line2,
+            country,
+            state,
+            gst_no,
+            website,
+            email_id,
+            city,
+            pincode,
+            use_organization_data,
+            weekdays_from,
+            weekdays_to,
+            saturday_from,
+            saturday_to,
+            sunday_from,
+            sunday_to,
+            select_days,
+            map_location,
+            referral,
+            referral_source,
+            terms_and_conditions_note
+        }, {
+            where: { id: centerId }
         });
 
-        res.status(201).json({
-            message: 'Center created successfully',
-            data: newCenter
-        });
+        if (updated) {
+            const updatedCenter = await Centre.findByPk(centerId);
+            res.status(200).json({
+                message: 'Center updated successfully',
+                data: updatedCenter
+            });
+        } else {
+            res.status(404).json({
+                message: 'Center not found'
+            });
+        }
     } catch (error) {
         console.error(error);
         res.status(500).json({
-            message: 'Error creating center',
+            message: 'Error updating center',
             error: error.message
         });
     }
 };
 
+exports.deleteCenter = async (req, res) => {
+    const centerId = req.params.id;
+    try {
+        const deleted = await Centre.destroy({
+            where: { id: centerId }
+        });
 
-
+        if (deleted) {
+            res.status(200).json({
+                message: 'Center deleted successfully'
+            });
+        } else {
+            res.status(404).json({
+                message: 'Center not found'
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: 'Error deleting center',
+            error: error.message
+        });
+    }
+};
 
 exports.createBatch = async (req, res) => {
     try {
@@ -206,6 +313,82 @@ exports.addSport = async (req, res) => {
         });
     } catch (error) {
         console.error('Error adding sport:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+exports.getSportsByOrganization = async (req, res) => {
+    try {
+        const { organization_id } = req.params;
+        
+        const sports = await Sports.findAll({
+            where: { organization_id }
+        });
+
+        if (!sports.length) {
+            return res.status(404).json({ message: 'No sports found for this organization' });
+        }
+
+        res.status(200).json({ data: sports });
+    } catch (error) {
+        console.error('Error fetching sports:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+exports.updateSport = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const {
+            image,
+            name,
+            number_of_facility,
+            centre,
+            description
+        } = req.body;
+
+        // Find the sport to update
+        const sport = await Sports.findByPk(id);
+        if (!sport) {
+            return res.status(404).json({ message: 'Sport not found' });
+        }
+
+        // Update the sport record
+        const updatedSport = await sport.update({
+            image,
+            name,
+            number_of_facility,
+            centre,
+            description
+        });
+
+        res.status(200).json({
+            message: 'Sport updated successfully',
+            data: updatedSport
+        });
+    } catch (error) {
+        console.error('Error updating sport:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+
+exports.deleteSport = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Find the sport to delete
+        const sport = await Sports.findByPk(id);
+        if (!sport) {
+            return res.status(404).json({ message: 'Sport not found' });
+        }
+
+        // Delete the sport record
+        await sport.destroy();
+
+        res.status(200).json({ message: 'Sport deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting sport:', error);
         res.status(500).json({ message: 'Server error' });
     }
 };

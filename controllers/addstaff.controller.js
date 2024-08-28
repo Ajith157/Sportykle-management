@@ -120,7 +120,7 @@ exports.getStaffById = async (req, res) => {
   
       // Update the staff record
       const updatedStaff = await staff.update({
-        organization_id, name, gender, dob, date_of_joining, mobile, alternate_mobile, email,
+        organization_id, name, gender, dob, date_of_joining, mobile,alternate_mobile, email,
         address, documents, payment_term,
         profit_share_type, profit_share_value,
         crm_commission_type, crm_commission_value,

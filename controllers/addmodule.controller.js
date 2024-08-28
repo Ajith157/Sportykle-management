@@ -73,3 +73,26 @@ exports.addModule = async (req, res) => {
         });
     }
 };
+
+
+exports.getModule = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const module = await Module.findByPk(id);
+        if (!module) {
+            return res.status(404).json({ message: 'Module not found' });
+        }
+
+        res.status(200).json({
+            message: 'Module retrieved successfully',
+            module
+        });
+    } catch (error) {
+        console.error('Error retrieving module:', error);
+        res.status(500).json({
+            message: 'Error retrieving module',
+            error: error.message
+        });
+    }
+};

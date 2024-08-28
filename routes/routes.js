@@ -17,7 +17,7 @@ module.exports = app => {
 	const addModuleController=require('../controllers/addmodule.controller.js')
 	const addCentreController=require('../controllers/addcentre.controller.js')
 	const addBatchController=require('../controllers/addcentre.controller.js')
-	const addSportsContoller=require('../controllers/addcentre.controller.js')
+	const addSportsController=require('../controllers/addcentre.controller.js')
 	const addMemberController=require('../controllers/addmember.controller.js')
 	const addStaffController=require('../controllers/addstaff.controller.js')
 	
@@ -70,7 +70,8 @@ module.exports = app => {
     
 	app.post("/api/add-service",services.add)
 
-	app.get("/api/get-services", services.listAll);
+	app.get("/api/get-services/:organization_id", services.listAll);
+
 
 	
 	//Add plan 
@@ -88,35 +89,48 @@ module.exports = app => {
 
 	app.post('/api/add-workout', workouts.add);
 
-	app.get("/api/get-services", services.listAll);
+	app.get('/api/get-workouts/:organization_id', workouts.getWorkoutsByOrganizationId);
 
 
+	
 	//Updata workout data
-    app.put('/api/edit-workout/:id', workouts.edit);
+    
+	app.put('/api/edit-workout/:id', workouts.edit);
 
 	//Delete Workout data
     app.delete('/api/delete-workout/:id', workouts.delete);
 
-    //Add Diet plans
+    
+	
+	//Add Diet plans
 	app.post('/api/add-diet-plan', dietPlans.add);
 
     //List out the diet plans
 	app.get('/api/diet-plans', dietPlans.list);
 
-	
-
 	//Update diet plans
-	app.put('/api/diet-plans/:id', dietPlans.update);
+    app.put('/api/diet-plans/:id', dietPlans.update);
 
 	//delete diet plans
 	app.delete('/api/diet-plans/:id', dietPlans.delete);
 
 	
 
+	
 	app.post('/api/add-module',addModuleController.addModule );
 
+	app.get('/api/get-module/:id', addModuleController.getModule);
+
+
+	
 	app.post('/api/add-centre',addCentreController.createCenter)
 
+	app.put('/api/update-centre/:id', addCentreController.updateCenter);
+
+	app.delete('/api/delete-centre/:id', addCentreController.deleteCenter);
+
+	
+	
 	app.post('/api/add-batch',addBatchController.createBatch)
 
 	app.get('/api/get-batches', addBatchController.getBatches);
@@ -126,12 +140,22 @@ module.exports = app => {
 
 
 
-	app.post('/api/add-sports',addSportsContoller.addSport)
+	app.post('/api/add-sports',addSportsController.addSport)
+	
+	app.get('/api/get-sports/:organization_id', addSportsController.getSportsByOrganization);
 
+	app.put('/api/update-sports/:id', addSportsController.updateSport);
+    
+	app.delete('/api/delete-sports/:id', addSportsController.deleteSport);
+
+	
+	
+	
 	app.post('/api/add-member',addMemberController.addMember)
 
 
 
+	
 	app.post('/api/add-staff',addStaffController.addStaff)
 
 	app.get('/api/get-staff/:id',addStaffController.getStaffById)

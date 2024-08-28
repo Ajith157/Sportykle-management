@@ -2,6 +2,7 @@
 // Define the Service model
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('./sequelize'); 
+const Organization=require('../models/organization.model')
 
 const Service = sequelize.define('services', {
     id: {
@@ -10,7 +11,7 @@ const Service = sequelize.define('services', {
         allowNull: false,
         primaryKey: true
     },
-    organizationid: {
+    organization_id: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
@@ -63,7 +64,7 @@ const Service = sequelize.define('services', {
     updatedAt: 'updated_at'
 });
 
-
+Service.belongsTo(Organization, { foreignKey: 'organization_id' });
 
 module.exports = Service;
 
@@ -73,7 +74,7 @@ Service.add = async (data) => {
     try {
         const query = `
             INSERT INTO services (
-                organizationid,
+                organization_id,
                 service_name,
                 description,
                 price,
@@ -85,7 +86,7 @@ Service.add = async (data) => {
                 created_at,
                 updated_at
             ) VALUES (
-                ${sequelize.escape(data.organizationid)},
+                ${sequelize.escape(data.organization_id)},
                 ${sequelize.escape(data.service_name)},
                 ${sequelize.escape(data.description)},
                 ${sequelize.escape(data.price)},
@@ -99,7 +100,7 @@ Service.add = async (data) => {
             )
         `;
 
-        console.log('Executing query:', query); 
+     
         await sequelize.query(query);
         return { status: '200', message: 'Service added successfully!' };
     } catch (error) {
@@ -108,16 +109,6 @@ Service.add = async (data) => {
     }
 };
 
-Service.listAll = async () => {
-    try {
-        
-        const services = await Service.findAll();
-        return services;
-    } catch (error) {
-        console.error("Error while listing services: ", error);
-        throw new Error(error.message || "Some error occurred while listing services.");
-    }
-};
 
 
 

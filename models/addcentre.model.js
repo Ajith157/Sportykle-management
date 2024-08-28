@@ -95,9 +95,7 @@ const Centre = sequelize.define('Centre', {
         type: Sequelize.ENUM('Walkin', 'Staff', 'Member', 'Facebook', 'Advertisement', 'Facebook', 'Other'),
         defaultValue: 'Other'
     },
-    referral_source: {
-        type: Sequelize.STRING
-    },
+   
     terms_and_conditions_note: {
         type: Sequelize.TEXT
     }

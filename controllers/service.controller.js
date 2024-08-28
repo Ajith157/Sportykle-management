@@ -11,7 +11,7 @@ exports.add = async (req, res) => {
 
     
     const data = {
-        organizationid: req.body.organizationid,
+        organization_id: req.body.organization_id,
         service_name: req.body.service_name,
         description: req.body.description,
         price: req.body.price,
@@ -35,11 +35,22 @@ exports.add = async (req, res) => {
 };
 
 
-
 exports.listAll = async (req, res) => {
     try {
+        const { organization_id } = req.params; 
         
-        const services = await Service.listAll();
+        
+
+        
+        if (!organization_id) {
+            return res.status(400).send({ message: "Organization ID is required." });
+        }
+
+        
+        const services = await Service.findAll({
+            where: { organization_id }
+        });
+
         res.status(200).send(services);
     } catch (err) {
         console.error("Error while listing services: ", err);
@@ -48,3 +59,4 @@ exports.listAll = async (req, res) => {
         });
     }
 };
+

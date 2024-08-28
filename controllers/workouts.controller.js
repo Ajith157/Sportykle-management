@@ -50,6 +50,29 @@ exports.listAll = async (req, res) => {
     }
 };
 
+exports.getWorkoutsByOrganizationId = async (req, res) => {
+    const { organization_id } = req.params;
+
+    try {
+        const workouts = await Workout.findAll({
+            where: { organization_id: organization_id }
+        });
+
+        if (workouts.length === 0) {
+            return res.status(404).send({
+                message: `No workouts found for organization ID ${organization_id}.`
+            });
+        }
+
+        res.status(200).send(workouts);
+    } catch (err) {
+        console.error("Error while retrieving workouts: ", err);
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving the workouts."
+        });
+    }
+};
+
 
 exports.edit = async (req, res) => {
     const workoutId = req.params.id;

@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('./sequelize'); 
+const Organization=require('../models/organization.model')
 
 
 const Plan = sequelize.define('plans', {
@@ -52,7 +53,7 @@ const Plan = sequelize.define('plans', {
     updatedAt: 'updated_at' 
 });
 
-
+Plan.belongsTo(Organization, { foreignKey: 'organization_id' });
 
 Plan.add = async (data) => {
     try {
